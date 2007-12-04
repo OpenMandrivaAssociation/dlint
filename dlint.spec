@@ -1,6 +1,6 @@
 %define name dlint
 %define version 1.4.0
-%define release 4mdk
+%define release  %mkrel 4
 
 Summary: A DNS error checking utility
 Name: %{name}
