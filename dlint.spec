@@ -13,7 +13,6 @@ License: GPL
 URL: http://www.domtools.com/dns/dlint.shtml
 Group: Networking/Other
 BuildArch: noarch
-BuildRoot: %{_tmppath}/%{name}-%{version}-root
 Requires: bind-utils, perl
 
 %description 
