@@ -1,16 +1,16 @@
 %define name dlint
-%define version 1.4.0
-%define release  %mkrel 6
+%define version 1.4.1
+%define release  %mkrel 1
 
 Summary: A DNS error checking utility
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source: http://www.domtools.com/pub/%{name}%{version}.tar.bz2
-Patch0: %{name}-rrfilt.patch.bz2
-Patch1: %{name}-tempdir.patch.bz2
-License: GPL
-URL: http://www.domtools.com/dns/dlint.shtml
+Source: http://www.domtools.com/pub/%{name}%{version}.tar.gz
+Patch0: %{name}-rrfilt.patch
+Patch1: %{name}-tempdir.patch
+License: GPLv2+
+URL: http://www.domtools.com
 Group: Networking/Other
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
