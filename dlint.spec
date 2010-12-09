@@ -1,6 +1,6 @@
 %define name dlint
 %define version 1.4.1
-%define release  %mkrel 1
+%define release  %mkrel 2
 
 Summary: A DNS error checking utility
 Name: %{name}
