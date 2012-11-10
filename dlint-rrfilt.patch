@@ -1,0 +1,11 @@
+--- dlint1.4.0/dlint.orig	Fri Jan 11 11:26:15 2002
++++ dlint1.4.0/dlint	Fri Jan 11 11:26:28 2002
+@@ -65,7 +65,7 @@
+ 
+ # RR filter from DiG output format to all FQDN on every line format.
+ # Change this path for your site!  See Makefile.
+-rrfilt="/usr/local/bin/digparse"
++rrfilt="/usr/share/dlint/digparse"
+ 
+ # ------------- END CONFIGURATIONS -------------------------
+ 

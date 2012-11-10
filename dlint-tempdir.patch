@@ -1,0 +1,82 @@
+--- dlint1.4.0/dlint.orig	2004-02-08 18:26:54.000000000 +0100
++++ dlint1.4.0/dlint	2004-02-08 18:32:51.000000000 +0100
+@@ -52,11 +52,7 @@
+ 
+ # Path to standard bin dirs on many platforms.
+ # Be sure this path includes the directory that holds your dig executable:
+-if test x"$PATH" = x""; then	# for security purposes
+-	PATH="/usr/ucb:/usr/bsd:/bin:/usr/bin:/usr/local/bin:/usr/share/bin:/usr/com/bin"
+-else
+-	PATH="${PATH}:/usr/ucb:/usr/bsd:/bin:/usr/bin:/usr/local/bin:/usr/share/bin:/usr/com/bin"
+-fi
++PATH="/bin:/usr/bin:/usr/local/bin
+ export PATH
+ 
+ VERSION=1.4.1
+@@ -70,6 +66,24 @@
+ # ------------- END CONFIGURATIONS -------------------------
+ 
+ 
++WORKDIR=`mktemp -td dlint.XXXXXXXXXX` || exit 1
++TMPNS="$WORKDIR/ns"
++TMPZONE="$WORKDIR/zone"
++TMPPTR="$WORKDIR/ptr"
++TMPA="$WORKDIR/a"
++TMPSUBDOMS="$WORKDIR/subdoms"
++TMPERR="$WORKDIR/err"
++TMPERR2="$WORKDIR/err2"
++TMPSERIALS="$WORKDIR/serials"
++
++exit_handler()
++{
++	local rc=$?
++	trap '' EXIT
++	rm -rf "$WORKDIR"
++	exit $rc
++}
++
+ TMPNS=/var/tmp/dlintns.$$
+ TMPZONE=/var/tmp/dlintzone.$$
+ TMPPTR=/var/tmp/dlintptr.$$
+@@ -79,8 +93,8 @@
+ TMPERR2=/var/tmp/dlinterr2.$$
+ TMPSERIALS=/var/tmp/dlintserials.$$
+ 
+-trap "rm -f $TMPNS $TMPZONE $TMPPTR $TMPA $TMPSUBDOMS $TMPERR $TMPERR2; exit 4" 1 2 3 15
+-
++trap exit_handler SIGHUP SIGINT SIGQUIT SIGTERM EXIT
++ 
+ usage() {
+ 	echo 'usage: dlint [-n] zone' 2>&1
+ 	echo '       example zones:  yoursite.com.  3.2.1.in-addr.arpa.' 2>&1
+@@ -240,7 +254,6 @@
+ 	echo ";; ============================================================"
+ 	echo ";; dlint of $domain run ending with errors."
+ 	echo ";; run ending: `date`"
+-	rm -f $TMPNS $TMPZONE $TMPPTR $TMPA $TMPSUBDOMS $TMPERR $TMPERR2
+ 	exit 2
+ fi
+ 
+@@ -292,7 +305,6 @@
+ 		echo ";; ============================================================"
+ 		echo ";; dlint of $domain run ending with errors."
+ 		echo ";; run ending: `date`"
+-		rm -f $TMPNS $TMPZONE $TMPPTR $TMPA $TMPSUBDOMS $TMPERR $TMPERR2 $TMPSERIALS
+ 		exit 2
+ 	fi
+ 	if test `awk '{print $1}' < $TMPSERIALS | sort -u | wc -l` -gt 1; then
+@@ -339,8 +351,6 @@
+ 	echo ";; ============================================================"
+ 	echo ";; dlint of $domain run ending with errors."
+ 	echo ";; run ending: `date`"
+-	rm -f $TMPNS $TMPZONE $TMPPTR $TMPA $TMPSUBDOMS $TMPERR $TMPERR2
+-	test $exitcode -lt 2 && exitcode=2
+ 	exit $exitcode
+ fi
+ 
+@@ -606,5 +616,4 @@
+ 	4)	echo "due to signal interruption." ;;
+ esac
+ echo ";; run ending: `date`"
+-rm -f $TMPNS $TMPZONE $TMPPTR $TMPA $TMPSUBDOMS $TMPERR $TMPERR2
+ exit $exitcode
