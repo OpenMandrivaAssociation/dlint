@@ -10,7 +10,7 @@ Source: http://www.domtools.com/pub/%{name}%{version}.tar.gz
 Patch0: %{name}-rrfilt.patch
 Patch1: %{name}-tempdir.patch
 License: GPLv2+
-URL: http://www.domtools.com
+URL: https://www.domtools.com
 Group: Networking/Other
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
